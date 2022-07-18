@@ -1,0 +1,28 @@
+server:
+  port: 8099
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+    discovery:
+      locator:
+        enabled: true
+      routes:
+        - id: address_route
+          uri: lb://ms-address
+          #uri: http://localhost:8084
+          predicates:
+            - Path=/country/**
+            - Path=/city/**
+            - Path=/address/**
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://192.168.1.149:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
