@@ -23,6 +23,8 @@ eureka:
       defaultZone: http://192.168.1.149:8761/eureka
 management:
   endpoints:
+    gateway:
+      enabled: true
     web:
       exposure:
         include: "*"
