@@ -6,12 +6,13 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      enabled: true
     discovery:
       locator:
         enabled: true
       routes:
         - id: address_route
-          uri: lb://ms-address
+          uri: lb://MS-ADDRESS
           #uri: http://localhost:8084
           predicates:
             - Path=/country/**
