@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GatewayRouting {
-    private static final String MS_ADDRESS_LABEL = "lb://ms-address";
+    private static final String MS_ADDRESS_LABEL = "lb://address-service";
 
     @Bean
     public RouteLocator configureRoute(RouteLocatorBuilder builder) {
