@@ -39,7 +39,7 @@ spring.cloud.gateway:
 eureka:
   client:
     serviceURL:
-      defaultZone: http://192.168.1.149:8761/eureka
+      defaultZone: http://localhost:8761/eureka
 
 #        .route("country", r->r.path("/country/**").uri(MS_ADDRESS_LABEL)) //static routing
 #        .route("state", r->r.path("/state/**").uri(MS_ADDRESS_LABEL)) //dynamic routing
