@@ -12,38 +12,40 @@ spring:
         enabled: true
 
 spring.cloud.gateway:
-#  default-filters:
-#    - name: GlobalFilter
-#      args:
-#        baseMessage: Spring Cloud Gateway GlobalFilter
-#        preLogger: true
-#        postLogger: true
   routes:
-#    - id: ${spring.application.name}
-#      uri: lb://${spring.application.name}
-#      predicates:
-#        - Path=/openapi/${spring.application.name}
-#      filters:
-#        - RewritePath=/openapi/${spring.application.name}, /openapi
-    - id: country-service
-      uri: lb://ms-address
+    - id: openapi-versioned
+      uri: http://localhost:${server.port}
       predicates:
-        - Path=/country/**
+        - Path=/v3/api-docs/*/v*
       filters:
-        - RewritePath=/country/(?<path>.*), /$\{path}
+        - RewritePath=/v3/api-docs/(.*)/(.*), /$1/v3/api-docs/$2
 
-
-
-
+    # route to catch swagger definitions requests and rewrite it to the corresponding url unversioned service
+    - id: openapi
+      uri: http://localhost:${server.port}
+      predicates:
+        - Path=/v3/api-docs/**
+      filters:
+        - RewritePath=/v3/api-docs/(.*), /$1/v3/api-docs
+    - id: address-service
+      uri: lb://address-service
+#      uri: http://localhost:8084
+      predicates:
+        - Path=/address/**
+      filters:
+        - RewritePath=/address/(?<path>.*), /address/v3/api-docs/
+    - id: article-service
+      uri: lb://article-service
+      #      uri: http://localhost:8084
+      predicates:
+        - Path=/article/**
+      filters:
+        - RewritePath=/article/(?<path>.*), /article/v3/api-docs/
 
 eureka:
   client:
     serviceURL:
       defaultZone: http://localhost:8761/eureka
-
-#        .route("country", r->r.path("/country/**").uri(MS_ADDRESS_LABEL)) //static routing
-#        .route("state", r->r.path("/state/**").uri(MS_ADDRESS_LABEL)) //dynamic routing
-#        .route("city", r->r.path("/city/**").uri(MS_ADDRESS_LABEL))
 
 management:
   endpoints:
@@ -55,5 +57,5 @@ management:
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.client: DEBUG
+    org.springframework.cloud.gateway: debug
+    reactor.netty.http.client: debug
