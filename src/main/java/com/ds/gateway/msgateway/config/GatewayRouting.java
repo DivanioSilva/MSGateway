@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Configuration;
 
 //@Configuration
 public class GatewayRouting {
-    private static final String MS_ADDRESS_LABEL = "lb://ms-address";
+
+    private static final String MS_ADDRESS_LABEL = "lb://address-service";
 
     //@Bean
+    /*
     public RouteLocator configureRoute(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("country-service", r->r.path("/country/**")
@@ -26,12 +28,12 @@ public class GatewayRouting {
                 .route("gateway-service", r -> r.path("/gateway-service/*")
                         .filters(f -> f.rewritePath("/city/(?<path>.*)", "/$\\{path}"))
                         .uri("gateway-service"))
-                 */
+
                 .route("openapi", r -> r.path("/v3/api-docs/**")
                         .filters(f -> f.rewritePath("/v3/api-docs/(?<path>.*))", "/$\\{path}/v3/api-docs"))
                         .uri("http://localhost:8099"))
                 .build();
-
+*/
         /*
               - id: openapi
       uri: http://localhost:${server.port}
@@ -48,6 +50,6 @@ public class GatewayRouting {
         - Path=/${spring.application.name}/**
       filters:
         - RewritePath=/${spring.application.name}/(?<path>.*), /$\{path}
-         */
-    }
+
+    } */
 }

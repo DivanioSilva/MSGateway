@@ -25,12 +25,24 @@ spring.cloud.gateway:
 #        - Path=/openapi/${spring.application.name}
 #      filters:
 #        - RewritePath=/openapi/${spring.application.name}, /openapi
+    - id: openapi
+      uri: http://localhost:${server.port}
+      predicates:
+        - Path=/v3/api-docs/**
+      filters:
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
     - id: country-service
-      uri: lb://ms-address
+      uri: lb://address-service
       predicates:
         - Path=/country/**
       filters:
         - RewritePath=/country/(?<path>.*), /$\{path}
+    - id: article-service
+      uri: lb://article-service
+      predicates:
+        - Path=/**
+      filters:
+        - RewritePath=/(?<path>.*), /$\{path}
 
 
 
