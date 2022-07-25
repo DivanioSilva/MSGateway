@@ -34,19 +34,19 @@ spring.cloud.gateway:
         - Path=/address/**
       filters:
         - RewritePath=/address/(?<path>.*), /address/v3/api-docs/
-    - id: country-service
+    - id: country
       uri: lb://address-service
       predicates:
         - Path=/country/**
-    - id: city-service
+    - id: city
       uri: lb://address-service
       predicates:
         - Path=/city/**
-    - id: state-service
+    - id: state
       uri: lb://address-service
       predicates:
         - Path=/state/**
-    - id: article-service
+    - id: article
       uri: lb://article-service
       #      uri: http://localhost:8084
       predicates:
