@@ -34,6 +34,18 @@ spring.cloud.gateway:
         - Path=/address/**
       filters:
         - RewritePath=/address/(?<path>.*), /address/v3/api-docs/
+    - id: country-service
+      uri: lb://address-service
+      predicates:
+        - Path=/country/**
+    - id: city-service
+      uri: lb://address-service
+      predicates:
+        - Path=/city/**
+    - id: state-service
+      uri: lb://address-service
+      predicates:
+        - Path=/state/**
     - id: article-service
       uri: lb://article-service
       #      uri: http://localhost:8084
@@ -41,7 +53,6 @@ spring.cloud.gateway:
         - Path=/article/**
       filters:
         - RewritePath=/article/(?<path>.*), /article/v3/api-docs/
-
 eureka:
   client:
     serviceURL:
